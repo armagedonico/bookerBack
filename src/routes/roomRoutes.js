@@ -17,11 +17,11 @@ router.get('/', getAllRooms);
 // GET /api/rooms/available - Get available rooms
 router.get('/available', getAvailableRooms);
 
-// GET /api/rooms/:id - Get room by ID
-router.get('/:id', getRoomById);
-
 // GET /api/rooms/:id/availability - Check room availability
 router.get('/:id/availability', checkRoomAvailability);
+
+// GET /api/rooms/:id - Get room by ID
+router.get('/:id', getRoomById);
 
 // POST /api/rooms - Create new room
 router.post('/', createRoom);

@@ -292,7 +292,8 @@ export const getAvailableRooms = async (req, res) => {
 // Check room availability
 export const checkRoomAvailability = async (req, res) => {
   try {
-    const { roomId, startDate, endDate } = req.params;
+    const { id: roomId } = req.params;
+    const { startDate, endDate } = req.query;
     
     if (!startDate || !endDate) {
       return res.status(400).json({

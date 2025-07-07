@@ -1,8 +1,6 @@
 import express from "express"; 
 import cors from "cors"; 
 import dotenv from "dotenv"; 
-import reservationRoutes from "./routes/reservationRoutes.js"; 
-import { connect } from "./prismaClient.js"; 
 
 dotenv.config(); 
 const app = express(); 
@@ -11,11 +9,16 @@ const app = express();
 app.use(cors()); // Allows queries from other origins (ie: frontend) 
 app.use(express.json()); // Allows JSON from frontend 
 
-// Routes
-app.use("/api", reservationRoutes); // Prefix for our routes 
+// Import and mount routes
+console.log("Importing routes...");
+const routes = await import("./routes/index.js");
+console.log("Routes imported successfully");
+
+app.use("/api", routes.default); // Prefix for our routes 
+console.log("Routes mounted successfully");
 
 // Error handling middleware
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,
@@ -33,7 +36,10 @@ app.use('*', (req, res) => {
 });
 
 // Connect to database
-connect(); 
+console.log("Connecting to database...");
+const { connect } = await import("./prismaClient.js");
+await connect();
+console.log("Database connected successfully");
 
 const PORT = process.env.PORT || 3001; 
 app.listen(PORT, () => { 

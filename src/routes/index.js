@@ -19,7 +19,7 @@ router.use('/guests', guestRoutes);
 router.use('/rooms', roomRoutes);
 router.use('/reservations', reservationRoutes);
 
-// Booking alias (for convenience)
-router.use('/bookings', reservationRoutes);
+// Booking alias (for convenience) - removed to avoid conflicts
+// router.use('/bookings', reservationRoutes);
 
 export default router;
